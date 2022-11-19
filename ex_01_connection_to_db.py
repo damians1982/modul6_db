@@ -40,6 +40,39 @@ def execute_sql(conn, sql):
        print(e)
 
 if __name__ == '__main__':
-   create_connection(r"database.db")
    
+    create_projects_sql = """
+    -- projects table
+    CREATE TABLE IF NOT EXISTS projects (
+        id integer PRIMARY KEY,
+        nazwa text NOT NULL,
+        start_date text,
+        end_date text
+    );
+    """
+
+    create_tasks_sql = """
+    -- zadanie table
+    CREATE TABLE IF NOT EXISTS tasks (
+        id integer PRIMARY KEY,
+        projekt_id integer NOT NULL,
+        nazwa VARCHAR(250) NOT NULL,
+        opis TEXT,
+        status VARCHAR(15) NOT NULL,
+        start_date text NOT NULL,
+        end_date text NOT NULL,
+        FOREIGN KEY (projekt_id) REFERENCES projects (id)
+    );
+    """
+
+    db_file = "database.db"
    
+    conn = create_connection(r"database.db")
+
+    if(conn is not None):
+        print("mozemy wykonywac sql-e")
+        execute_sql(conn, create_projects_sql)
+        execute_sql(conn, create_tasks_sql)
+        conn.close()
+   
+    
