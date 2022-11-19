@@ -9,11 +9,11 @@ def create_connection(db_file):
    try:
        conn = sqlite3.connect(db_file)
        print(f"Connected to {db_file}, sqlite version: {sqlite3.version}")
+       return conn
    except Error as e:
        print(e)
-   finally:
-       if conn:
-           conn.close()
+   
+   return conn
 
 def create_connection_in_memory():
    """ create a database connection to a SQLite database """
@@ -41,4 +41,5 @@ def execute_sql(conn, sql):
 
 if __name__ == '__main__':
    create_connection(r"database.db")
-   create_connection_in_memory()
+   
+   
