@@ -28,16 +28,18 @@ def create_connection_in_memory():
            conn.close()
 
 def execute_sql(conn, sql):
-   """ Execute sql
-   :param conn: Connection object
-   :param sql: a SQL script
-   :return:
-   """
-   try:
-       c = conn.cursor()
-       c.execute(sql)
-   except Error as e:
-       print(e)
+    """ Execute sql
+    :param conn: Connection object
+    :param sql: a SQL script
+    :return:
+    """
+    try:
+        c = conn.cursor()
+        c.execute(sql)
+        conn.commit()
+        print("executing sql:"+sql)
+    except Error as e:
+        print(e)
 
 if __name__ == '__main__':
    
@@ -65,6 +67,22 @@ if __name__ == '__main__':
     );
     """
 
+    now1 = datetime.now()
+    time1 = now1.strftime("%H:%M:%S")
+    row1 = """
+    INSERT INTO projects(id, nazwa, start_date, end_date)
+    VALUES (1,
+        "Zrob zadania",
+        "2020-05-08 00:00:00",
+        "2020-05-10 00:00:00"
+        );
+    """
+
+    select1 = """
+    SELECT * 
+    FROM projects;
+    """
+
     db_file = "database.db"
    
     conn = create_connection(r"database.db")
@@ -73,6 +91,8 @@ if __name__ == '__main__':
         print("mozemy wykonywac sql-e")
         execute_sql(conn, create_projects_sql)
         execute_sql(conn, create_tasks_sql)
+        execute_sql(conn,row1)
+        execute_sql(conn,select1)
         conn.close()
    
     
