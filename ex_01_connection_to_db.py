@@ -2,6 +2,7 @@
 
 import sqlite3
 from sqlite3 import Error
+from datetime import datetime
 
 def create_connection(db_file):
    """ create a database connection to a SQLite database """
@@ -39,7 +40,56 @@ def execute_sql(conn, sql):
         conn.commit()
         print("executing sql:"+sql)
     except Error as e:
+        print("Error:")
         print(e)
+
+def execute_select(conn,sql):
+    """ Execute sql
+    :param conn: Connection object
+    :param sql: a SQL script (SELECT)
+    :return:
+    """
+    try:
+        cur = conn.cursor()
+        cur.execute(sql)
+        print("executing sql:"+sql)
+        rows = cur.fetchall()
+        return rows
+    except Error as e:
+        print("Error:")
+        print(e)
+
+
+def add_project(conn,project):
+    """
+    Create a new project into the projects table
+    :param conn:
+    :param project:
+    :return: project id
+    """
+    sql = '''INSERT INTO projects(nazwa, start_date, end_date)
+             VALUES(?,?,?)'''
+    cur = conn.cursor()
+    cur.execute(sql, project)
+    commit_result = conn.commit()
+    print("executing sql:"+sql)
+    return cur.lastrowid
+
+def add_task(conn,task):
+    """
+    Create a new task into the task table
+    :param conn:
+    :param task:
+    :return: task_id
+    """
+
+    sql = '''INSERT INTO tasks(projekt_id,nazwa,opis,status,start_date,end_date)
+             VALUES(?,?,?,?,?,?)'''
+    cur = conn.cursor()
+    cur.execute(sql,task)
+    conn.commit()
+    print("executing sql:"+sql)
+    return cur.lastrowid
 
 if __name__ == '__main__':
    
@@ -77,6 +127,14 @@ if __name__ == '__main__':
         "2020-05-10 00:00:00"
         );
     """
+    row2 = """
+    INSERT INTO projects(id, nazwa, start_date, end_date)
+    VALUES (4,
+        "dalej robimy i robimy",
+        "2020-06-05 00:00:00",
+        "2020-06-16 00:00:00"
+        );
+    """
 
     select1 = """
     SELECT * 
@@ -89,10 +147,21 @@ if __name__ == '__main__':
 
     if(conn is not None):
         print("mozemy wykonywac sql-e")
-        execute_sql(conn, create_projects_sql)
-        execute_sql(conn, create_tasks_sql)
-        execute_sql(conn,row1)
-        execute_sql(conn,select1)
+        #execute_sql(conn, create_projects_sql)
+        #execute_sql(conn, create_tasks_sql)
+        #execute_sql(conn,row1)
+        #execute_sql(conn,row2)
+
+        project = ("Programista", "2022-11-25 00:00:00", "2033-12-01 00:00:00")
+        pr_id = add_project(conn, project)
+
+        #task = (9,"Analiza Apple","Jakie jest ryzyko związane z Applem","Czeka","20222-12-01 00:00:00","2023-05-22 00:00:00")
+        #pr_id2 = add_task(conn,task)
+
+        sql1 = "SELECT * from tasks"
+        rows1 = execute_select(conn,sql1)
+
+        #execute_sql(conn,select1)
         conn.close()
    
     
