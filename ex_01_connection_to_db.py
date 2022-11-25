@@ -72,7 +72,7 @@ def add_project(conn,project):
     cur = conn.cursor()
     cur.execute(sql, project)
     commit_result = conn.commit()
-    print("executing sql:"+sql)
+    print("executing sql:"+sql+str(project))
     return cur.lastrowid
 
 def add_task(conn,task):
@@ -152,14 +152,26 @@ if __name__ == '__main__':
         #execute_sql(conn,row1)
         #execute_sql(conn,row2)
 
-        project = ("Programista", "2022-11-25 00:00:00", "2033-12-01 00:00:00")
-        pr_id = add_project(conn, project)
+        #project = ("Data Scientist", "2022-11-25 00:00:00", "2033-12-01 00:00:00")
+        #pr_id = add_project(conn, project)
 
-        #task = (9,"Analiza Apple","Jakie jest ryzyko związane z Applem","Czeka","20222-12-01 00:00:00","2023-05-22 00:00:00")
-        #pr_id2 = add_task(conn,task)
+        task = (9,"Analiza Apple","Jakie jest ryzyko związane z Applem","Czeka","20222-12-01 00:00:00","2023-05-22 00:00:00")
+        pr_id2 = add_task(conn,task)
 
-        sql1 = "SELECT * from tasks"
+        sql1 = "SELECT * from projects"
         rows1 = execute_select(conn,sql1)
+
+        sql2 = "SELECT * from tasks"
+        rows2 = execute_select(conn,sql2)
+
+        for i in rows1:
+            print(i)
+
+        print("---")
+
+        for i in rows2:
+            for j in i:
+                print(str(j).encode("utf-8"))
 
         #execute_sql(conn,select1)
         conn.close()
