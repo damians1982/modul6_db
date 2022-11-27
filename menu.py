@@ -5,14 +5,17 @@ import ex_01_connection_to_db
 
 
 def menu():
+    print("")
+    print("")
     print("--------MENU--------------------------")
     print("1 - Create table projects")
     print("2 - Create table tasks")
     print("3 - show tables")
     print("4 - dodaj project")
     print("5 - wyswietl projekty")
-    print("6 - wyszukaj projekt po nazwie -(NOT IMPLEMENTED)")
+    print("6 - wyszukaj projekt po nazwie")
     print("0 - exit")
+    print("999 - testy")
     print("--------------------------------------")
     print("")
 
@@ -40,13 +43,17 @@ def main_loop(conn):
             print("Wyswietlenie listy projektow")
             rows1 = print_projects(conn)
         elif (input1 == '6'):
-            print("This functionality NOT IMPLEMENTED(yet)")
+            print("Wprowadz nazwe projektu:")
+            proj_name = input()
+            find_project_and_print(conn, proj_name)
         elif (input1 == '7'):
             print("Wybrales 7")
         elif(input1=='8'):
             print("Wybrales 8")
         elif (input1 == '0'):
             break
+        elif(input1=='999'):
+            print("testowe")
         else:
             pass
 
@@ -65,4 +72,16 @@ def print_projects(conn):
     rows1 = ex_01_connection_to_db.execute_select(conn,sql_pr1)
     for i in rows1:
         print(i)
+    return rows1
+
+def find_project_and_print(conn,name1):
+    rows1 = ex_01_connection_to_db.find_project_by_name(conn,name1)
+    print("")
+    
+    if(rows1!=None and len(rows1)>0):
+        print("Znaleziono nastepujace projekty o nazwie"+name1+":")
+        for i in rows1:
+            print(i)
+    else:
+        print("Nie znaleziono zadnych projektow o nazwie "+name1+":")
     return rows1

@@ -60,6 +60,19 @@ def execute_select(conn,sql):
         print("Error:")
         print(e)
 
+def find_project_by_name(conn,name1):
+    #finding project by name
+    try:
+        cur = conn.cursor()
+
+        cur.execute("SELECT * FROM projects WHERE nazwa=?",(name1,))
+        print("executing sql: SELECT * FROM projects WHERE name="+str(name1))
+        rows = cur.fetchall()
+        return rows
+    except Error as e:
+        print("Error:")
+        print(e)
+
 
 def add_project(conn,project):
     """
