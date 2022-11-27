@@ -1,8 +1,8 @@
 #Functions for main text menu loop
 
 import ex_01_connection_to_db
-
-
+from datetime import datetime
+from datetime import timedelta
 
 def menu():
     print("")
@@ -14,6 +14,7 @@ def menu():
     print("4 - dodaj project")
     print("5 - wyswietl projekty")
     print("6 - wyszukaj projekt po nazwie")
+    print("7 - update projektu po id")
     print("0 - exit")
     print("999 - testy")
     print("--------------------------------------")
@@ -47,7 +48,9 @@ def main_loop(conn):
             proj_name = input()
             find_project_and_print(conn, proj_name)
         elif (input1 == '7'):
-            print("Wybrales 7")
+            print("Wprowadz id projektu, ktory chcesz zmienic: ")
+            proj_id = input()
+            update_project_by_id(conn,proj_id)
         elif(input1=='8'):
             print("Wybrales 8")
         elif (input1 == '0'):
@@ -85,3 +88,19 @@ def find_project_and_print(conn,name1):
     else:
         print("Nie znaleziono zadnych projektow o nazwie "+name1+":")
     return rows1
+
+def update_project_by_id(conn,id1):
+    print("update_project_by_id(), with id="+str(id1))
+    print("Podaj nowa nazwe projektu: ")
+    new_name = input()
+    
+    #daty dla uproszczenia aktualna dla start date i aktualna+1 dzien dla end date
+    new_start_date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    print("nowa data konca to: "+str(new_start_date))
+
+    new_end_date = (datetime.now() + timedelta(days=1)).strftime("%d/%m/%Y %H:%M:%S")
+    print("nowa end data to: "+str(new_end_date))
+
+    new_data1 = (new_name,new_start_date,new_end_date)
+
+    result1 = ex_01_connection_to_db.update_project_by_id(conn,id1,new_data1)

@@ -105,6 +105,19 @@ def add_task(conn,task):
     print("executing sql:"+sql)
     return cur.lastrowid
 
+def update_project_by_id(conn,id,params):
+    print("update_project_by_id")
+
+    sql1 = f"UPDATE projects SET nazwa='{params[0]}',start_date='{params[1]}',end_date='{params[2]}' WHERE id={id};"
+    print("sql="+sql1)
+    try:
+        cur = conn.cursor()
+        cur.execute(sql1)
+        conn.commit()
+        print("OK")
+    except sqlite3.OperationalError as e:
+        print(e)
+
 
 def just_hello():
     print("Just hello")
