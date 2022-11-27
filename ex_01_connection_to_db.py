@@ -3,6 +3,7 @@
 import sqlite3
 from sqlite3 import Error
 from datetime import datetime
+import menu
 
 def create_connection(db_file):
    """ create a database connection to a SQLite database """
@@ -91,9 +92,11 @@ def add_task(conn,task):
     print("executing sql:"+sql)
     return cur.lastrowid
 
-if __name__ == '__main__':
-   
-    create_projects_sql = """
+
+def just_hello():
+    print("Just hello")
+
+create_projects_sql = """
     -- projects table
     CREATE TABLE IF NOT EXISTS projects (
         id integer PRIMARY KEY,
@@ -103,6 +106,8 @@ if __name__ == '__main__':
     );
     """
 
+if __name__ == '__main__':
+   
     create_tasks_sql = """
     -- zadanie table
     CREATE TABLE IF NOT EXISTS tasks (
@@ -146,7 +151,7 @@ if __name__ == '__main__':
     conn = create_connection(r"database.db")
 
     if(conn is not None):
-        print("mozemy wykonywac sql-e")
+        menu.main_loop(conn)
         #execute_sql(conn, create_projects_sql)
         #execute_sql(conn, create_tasks_sql)
         #execute_sql(conn,row1)
@@ -155,23 +160,23 @@ if __name__ == '__main__':
         #project = ("Data Scientist", "2022-11-25 00:00:00", "2033-12-01 00:00:00")
         #pr_id = add_project(conn, project)
 
-        task = (9,"Analiza Apple","Jakie jest ryzyko związane z Applem","Czeka","20222-12-01 00:00:00","2023-05-22 00:00:00")
-        pr_id2 = add_task(conn,task)
+        #task = (9,"Analiza Apple","Jakie jest ryzyko związane z Applem","Czeka","20222-12-01 00:00:00","2023-05-22 00:00:00")
+        #pr_id2 = add_task(conn,task)
 
-        sql1 = "SELECT * from projects"
-        rows1 = execute_select(conn,sql1)
+        #sql1 = "SELECT * from projects"
+        #rows1 = execute_select(conn,sql1)
 
-        sql2 = "SELECT * from tasks"
-        rows2 = execute_select(conn,sql2)
+        #sql2 = "SELECT * from tasks"
+        #rows2 = execute_select(conn,sql2)
 
-        for i in rows1:
-            print(i)
+        #for i in rows1:
+        #    print(i)
 
-        print("---")
+        #print("---")
 
-        for i in rows2:
-            for j in i:
-                print(str(j).encode("utf-8"))
+        #for i in rows2:
+        #    for j in i:
+        #        print(str(j).encode("utf-8"))
 
         #execute_sql(conn,select1)
         conn.close()
