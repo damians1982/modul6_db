@@ -32,6 +32,13 @@ def main_loop(conn):
             ex_01_connection_to_db.sql_fetch(conn)
         elif (input1 == '4'):
             print("Dodawanie projektu")
+
+            #project = ("Data Scientist", "2022-11-25 00:00:00", "2033-12-01 00:00:00")
+            #pr_id = add_project(conn, project)
+
+            project1 = text_input_project()
+            pr_id = ex_01_connection_to_db.add_project(conn,project1)
+
         elif (input1 == '5'):
             print("Wybrales 5")
         elif (input1 == '6'):
@@ -44,3 +51,12 @@ def main_loop(conn):
             break
         else:
             pass
+
+def text_input_project():
+    #narazie duze uproszczenie z datami bo nie chce mi sie bawic z formatowaniem wejscia na daty
+    print("Wprowadzanie nowego projektu")
+    project_name = input()
+    project_start_date = "2022-11-25 00:00:00"
+    project_end_date = "2033-12-01 00:00:00"
+    project = (project_name,project_start_date,project_end_date)
+    return project
