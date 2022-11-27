@@ -10,6 +10,8 @@ def menu():
     print("2 - Create table tasks")
     print("3 - show tables")
     print("4 - dodaj project")
+    print("5 - wyswietl projekty")
+    print("6 - wyszukaj projekt po nazwie -(NOT IMPLEMENTED)")
     print("0 - exit")
     print("--------------------------------------")
     print("")
@@ -32,17 +34,13 @@ def main_loop(conn):
             ex_01_connection_to_db.sql_fetch(conn)
         elif (input1 == '4'):
             print("Dodawanie projektu")
-
-            #project = ("Data Scientist", "2022-11-25 00:00:00", "2033-12-01 00:00:00")
-            #pr_id = add_project(conn, project)
-
             project1 = text_input_project()
             pr_id = ex_01_connection_to_db.add_project(conn,project1)
-
         elif (input1 == '5'):
-            print("Wybrales 5")
+            print("Wyswietlenie listy projektow")
+            rows1 = print_projects(conn)
         elif (input1 == '6'):
-            print("Wybrales 6")
+            print("This functionality NOT IMPLEMENTED(yet)")
         elif (input1 == '7'):
             print("Wybrales 7")
         elif(input1=='8'):
@@ -60,3 +58,11 @@ def text_input_project():
     project_end_date = "2033-12-01 00:00:00"
     project = (project_name,project_start_date,project_end_date)
     return project
+
+def print_projects(conn):
+    #wyswietlenie wszystkich projektow
+    sql_pr1 = "SELECT * FROM projects"
+    rows1 = ex_01_connection_to_db.execute_select(conn,sql_pr1)
+    for i in rows1:
+        print(i)
+    return rows1
