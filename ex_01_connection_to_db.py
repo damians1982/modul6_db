@@ -118,6 +118,17 @@ def update_project_by_id(conn,id,params):
     except sqlite3.OperationalError as e:
         print(e)
 
+def deleta_project_by_id(conn,id):
+
+    sql1 = f"DELETE FROM projects WHERE id={id}"
+    print("sql="+sql1)
+    try:
+        cur = conn.cursor()
+        cur.execute(sql1)
+        conn.commit()
+        print("OK")
+    except sqlite3.OperationalError as e:
+        print(e)
 
 def just_hello():
     print("Just hello")

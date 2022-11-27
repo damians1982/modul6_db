@@ -15,6 +15,7 @@ def menu():
     print("5 - wyswietl projekty")
     print("6 - wyszukaj projekt po nazwie")
     print("7 - update projektu po id")
+    print("8 - delete projektu po id")
     print("0 - exit")
     print("999 - testy")
     print("--------------------------------------")
@@ -52,7 +53,9 @@ def main_loop(conn):
             proj_id = input()
             update_project_by_id(conn,proj_id)
         elif(input1=='8'):
-            print("Wybrales 8")
+            print("Wprowadz id projektu, ktory chcesz usunac: ")
+            proj_id = input()
+            delete_project_by_id(conn,proj_id)
         elif (input1 == '0'):
             break
         elif(input1=='999'):
@@ -104,3 +107,9 @@ def update_project_by_id(conn,id1):
     new_data1 = (new_name,new_start_date,new_end_date)
 
     result1 = ex_01_connection_to_db.update_project_by_id(conn,id1,new_data1)
+
+
+def delete_project_by_id(conn,id1):
+    print("delete_project_by_id(), with id="+str(id1))
+    
+    ex_01_connection_to_db.deleta_project_by_id(conn,id1)
