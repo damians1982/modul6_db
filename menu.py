@@ -16,6 +16,8 @@ def menu():
     print("6 - wyszukaj projekt po nazwie")
     print("7 - update projektu po id")
     print("8 - delete projektu po id")
+    print("9 - create table measures - NEW !!!")
+    print("10 - create table stations - NEW !!!")
     print("0 - exit")
     print("999 - testy")
     print("--------------------------------------")
@@ -52,10 +54,13 @@ def main_loop(conn):
             print("Wprowadz id projektu, ktory chcesz zmienic: ")
             proj_id = input()
             update_project_by_id(conn,proj_id)
-        elif(input1=='8'):
+        elif(input1 == '8'):
             print("Wprowadz id projektu, ktory chcesz usunac: ")
             proj_id = input()
             delete_project_by_id(conn,proj_id)
+        elif(input1 == '9'):
+            print("Wchodzę")
+            ex_01_connection_to_db.create_measures_sql()
         elif (input1 == '0'):
             break
         elif(input1=='999'):

@@ -4,6 +4,7 @@ import sqlite3
 from sqlite3 import Error
 from datetime import datetime
 import menu
+import csv
 
 def create_connection(db_file):
    """ create a database connection to a SQLite database """
@@ -138,6 +139,20 @@ def sql_fetch(con):
     cursorObj.execute('SELECT name from sqlite_master where type= "table"')
     print(cursorObj.fetchall())
 
+def create_measures_sql():
+    print("Inside: create_measures_sql()")
+    file1 = open('clean_measure.csv')
+
+    csvreader = csv.reader(file1)
+
+    header = []
+    header = next(csvreader)
+
+    for menu_item in header:
+        print(menu_item)
+
+    file1.close()
+
 create_projects_sql = """
 -- projects table
 CREATE TABLE IF NOT EXISTS projects (
@@ -161,6 +176,12 @@ CREATE TABLE IF NOT EXISTS tasks (
     FOREIGN KEY (projekt_id) REFERENCES projects (id)
 );
 """
+
+#create_measures_sql = """
+#-- tabela measures
+#CREATE TABLE IF NOT EXISTS measures(
+#    id integer PRIMARY KEY
+#"""
 
 if __name__ == '__main__':  
 
