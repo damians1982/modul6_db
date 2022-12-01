@@ -139,8 +139,10 @@ def sql_fetch(con):
     cursorObj.execute('SELECT name from sqlite_master where type= "table"')
     print(cursorObj.fetchall())
 
-def create_measures_sql():
-    print("Inside: create_measures_sql()")
+
+
+def create_measures_table(conn,sql1):
+    print("Inside: create_measures_table()")
     file1 = open('clean_measure.csv')
 
     csvreader = csv.reader(file1)
@@ -149,9 +151,31 @@ def create_measures_sql():
     header = next(csvreader)
 
     for menu_item in header:
+        sql1 = sql1 + ","+menu_item+" text NOT NULL"
         print(menu_item)
-
+    sql1 = sql1+");"
     file1.close()
+
+    print(sql1)
+    execute_sql(conn,sql1)
+
+def create_stations_table(conn,sql1):
+    print("Inside: create_stations_table()")
+    file1 = open('clean_stations.csv')
+
+    csvreader = csv.reader(file1)
+
+    header = []
+    header = next(csvreader)
+
+    for menu_item in header:
+        sql1 = sql1 + ","+menu_item+" text NOT NULL"
+        print(menu_item)
+    sql1 = sql1+");"
+    file1.close()
+
+    print(sql1)
+    execute_sql(conn,sql1)
 
 create_projects_sql = """
 -- projects table
@@ -177,11 +201,18 @@ CREATE TABLE IF NOT EXISTS tasks (
 );
 """
 
-#create_measures_sql = """
-#-- tabela measures
-#CREATE TABLE IF NOT EXISTS measures(
-#    id integer PRIMARY KEY
-#"""
+create_measures_sql = """
+-- zadanie table
+CREATE TABLE IF NOT EXISTS measures (
+    id integer PRIMARY KEY
+"""
+
+create_stations_sql = """
+-- zadanie table
+CREATE TABLE IF NOT EXISTS stations (
+    id integer PRIMARY KEY
+"""
+
 
 if __name__ == '__main__':  
 

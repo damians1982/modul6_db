@@ -59,8 +59,9 @@ def main_loop(conn):
             proj_id = input()
             delete_project_by_id(conn,proj_id)
         elif(input1 == '9'):
-            print("Wchodzę")
-            ex_01_connection_to_db.create_measures_sql()
+            ex_01_connection_to_db.create_measures_table(conn,ex_01_connection_to_db.create_measures_sql)
+        elif(input1 == '10'):
+            ex_01_connection_to_db.create_stations_table(conn,ex_01_connection_to_db.create_stations_sql)
         elif (input1 == '0'):
             break
         elif(input1=='999'):
