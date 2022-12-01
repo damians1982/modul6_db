@@ -16,7 +16,7 @@ def menu():
     print("6 - wyszukaj projekt po nazwie")
     print("7 - update projektu po id")
     print("8 - delete projektu po id")
-    print("9 - create table measures - (NOT IMPLEMENTED)")
+    print("9 - create table measures and fill witg data - NEW !!!")
     print("10 - create table stations and fill with data - NEW !!!")
     print("0 - exit")
     print("999 - testy")
