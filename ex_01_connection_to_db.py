@@ -144,38 +144,85 @@ def sql_fetch(con):
 def create_measures_table(conn,sql1):
     print("Inside: create_measures_table()")
     file1 = open('clean_measure.csv')
+    sql2 = "INSERT INTO measures ("
 
     csvreader = csv.reader(file1)
 
     header = []
     header = next(csvreader)
 
+    item_num=0
     for menu_item in header:
         sql1 = sql1 + ","+menu_item+" text NOT NULL"
-        print(menu_item)
+        if(len(header)!=item_num+1):
+            sql2=sql2+menu_item+","
+        else:
+            sql2=sql2+menu_item+")"
+        item_num+=1
     sql1 = sql1+");"
-    file1.close()
+    
+    execute_sql(conn,sql1)  #creating table
 
-    print(sql1)
-    execute_sql(conn,sql1)
+    sql2+=" VALUES"
+
+    for row in csvreader:
+        #dla każdego wiersza robimy ladnego inserta
+        row_len = 0
+        sql_row = ""
+        sql_row = sql2
+        for item in row:
+            if(row_len==0):
+                sql_row=sql_row+"('"+item+"'"
+            elif(row_len < (len(row)-1)):
+                sql_row=sql_row+",'"+item+"'"
+            else:
+                sql_row=sql_row+",'"+item+"')"
+            row_len+=1
+        #TU INSERT
+        execute_sql(conn,sql_row)
+    file1.close()
 
 def create_stations_table(conn,sql1):
     print("Inside: create_stations_table()")
     file1 = open('clean_stations.csv')
+    sql2 = "INSERT INTO stations ("
 
     csvreader = csv.reader(file1)
 
     header = []
     header = next(csvreader)
 
+    item_num=0
     for menu_item in header:
         sql1 = sql1 + ","+menu_item+" text NOT NULL"
         print(menu_item)
+        if(len(header)!=item_num+1):
+            sql2=sql2+menu_item+","
+        else:
+            sql2=sql2+menu_item+")"
+        item_num+=1
     sql1 = sql1+");"
-    file1.close()
 
-    print(sql1)
-    execute_sql(conn,sql1)
+    execute_sql(conn,sql1)  #creating table
+
+    sql2+=" VALUES"
+
+    for row in csvreader:
+        #dla każdego wiersza robimy ladnego inserta
+        row_len = 0
+        sql_row = ""
+        sql_row = sql2
+        for item in row:
+            if(row_len==0):
+                sql_row=sql_row+"('"+item+"'"
+            elif(row_len < (len(row)-1)):
+                sql_row=sql_row+",'"+item+"'"
+            else:
+                sql_row=sql_row+",'"+item+"')"
+            row_len+=1
+        #TU INSERT
+        execute_sql(conn,sql_row)
+    file1.close()
 
 create_projects_sql = """
 -- projects table
